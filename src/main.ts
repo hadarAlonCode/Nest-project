@@ -9,6 +9,9 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
       forbidNonWhitelisted: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   ); //validate routes
   await app.listen(3000);
@@ -16,3 +19,4 @@ async function bootstrap() {
 bootstrap();
 
 // ..master
+// section_2 - with postgres db

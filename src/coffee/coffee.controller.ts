@@ -14,21 +14,17 @@ import {
 import { CoffeeService } from './coffee.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
+import { ObjectId } from 'mongoose';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 
 @Controller('coffee')
 export class CoffeeController {
   constructor(private readonly coffeeService: CoffeeService) {}
 
   @Get()
-  getAll() {
-    return this.coffeeService.findAll();
+  getAll(@Query() paginationQuery: PaginationQueryDto) {
+    return this.coffeeService.findAll(paginationQuery);
     // response.status(200).send('this return all coffee text');
-  }
-
-  @Get('pagination')
-  pagination(@Query() paginationQuery) {
-    const { limit, offset } = paginationQuery;
-    return `this action return all coffees. limit: ${limit}, offset: ${offset}`;
   }
 
   @Get(':id')
@@ -49,7 +45,7 @@ export class CoffeeController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: ObjectId) {
     return this.coffeeService.remove(id);
     // return `this action removes #${id} coffee`;
   }
